@@ -1,0 +1,22 @@
+---
+   - name: Create the user nova 
+     keystone_user: tenant=admin user=nova password=nova_pass token=c74441d71bd640660939 state=present
+
+   - name: Add nova user to admin role
+     keystone_user: user=nova tenant=service role=admin token=c74441d71bd640660939  state=present
+
+   - name: Create nova service and Endpoint
+     keystone_service: name=nova type=compute description="OpenStack Compute" token=c74441d71bd640660939 public_url=http://localhost:35357/v2.0
+
+   - name: Nova DB Sync
+     command: nova-manage db sync
+
+   - name: Copy Nova.conf
+     template: src=/etc/ansible/roles/controller/templates/no.j2 dest=/etc/nova/nova.conf owner=nova group=nova mode="u=rw,g=r,o=r"
+   
+   - name: Copy nova-compute.conf
+     template: src=/etc/ansible/roles/controller/templates/nc.j2 dest=/etc/nova/nova-compute.conf owner=nova group=nova mode="u=rw,g=r,o=r"
+
+   
+     notify:
+     - Nova restart all

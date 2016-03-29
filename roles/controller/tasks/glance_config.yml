@@ -1,0 +1,17 @@
+---
+   - name: Create the user glance
+     keystone_user: tenant=admin user=glance password=glance_pass token=c74441d71bd640660939 state=present
+
+   - name: Add glance user to admin role
+     keystone_user: user=glance tenant=service role=admin token=c74441d71bd640660939  state=present
+
+   - name: Create glance service and Endpoint
+     keystone_service: name=glance type=image description="Glance Image Service`" token=c74441d71bd640660939 public_url=http://localhost:35357/v2.0
+
+   - name: Create Cinderv2 service and Endpoint
+     keystone_service: name=glancev2 type=volume2 description="OpenStack Block Storage v2" token=c74441d71bd640660939 public_url=http://localhost:35357/v2.0
+
+#   - name: Nova DB Sync
+#     command: nova-manage db sync
+
+
