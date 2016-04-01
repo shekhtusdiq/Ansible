@@ -1,17 +1,32 @@
 ---
    - name: Create the user glance
-     keystone_user: tenant=admin user=glance password=glance_pass token=c74441d71bd640660939 state=present
+     keystone_user: tenant=service user=glance password=glance_pass token=c74441d71bd640660939 state=present
 
    - name: Add glance user to admin role
-     keystone_user: user=glance tenant=service role=admin token=c74441d71bd640660939  state=present
+     keystone_user: user=glance tenant=service role=admin token=c74441d71bd640660939
 
    - name: Create glance service and Endpoint
-     keystone_service: name=glance type=image description="Glance Image Service`" token=c74441d71bd640660939 public_url=http://localhost:35357/v2.0
+     keystone_service: name=glance type=image description="Glance Image Service" public_url=http://{{ ansible_eth0['ipv4']['address'] }}:9292/v2.0 token=c74441d71bd640660939
 
-   - name: Create Cinderv2 service and Endpoint
-     keystone_service: name=glancev2 type=volume2 description="OpenStack Block Storage v2" token=c74441d71bd640660939 public_url=http://localhost:35357/v2.0
+     notify:
+     - Glance restart
 
-#   - name: Nova DB Sync
-#     command: nova-manage db sync
+     notify:
+     - Glance Registery restart
+
+     notify:
+     - Synch Glance
+
+# Glance api needs to be restarted
+# glance registre needs to be restarted
+# Sync the database
+
+#   - name: Download a pre-bundled image for testing
+#     command: glance image-create --name Cirros --is-public true --container-format bare --disk-format qcow2 --location https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img
 
 
+# Add condition here 
+
+   - name: Check if download success or not
+     command: glance image-list
+     

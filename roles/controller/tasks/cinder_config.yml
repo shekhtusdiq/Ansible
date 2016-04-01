@@ -6,10 +6,10 @@
      keystone_user: user=cinder tenant=service role=admin token=c74441d71bd640660939  state=present
 
    - name: Create Cinder service and Endpoint
-     keystone_service: name=cinder type=volume description="OpenStack Block Storage" token=c74441d71bd640660939 public_url=http://localhost:35357/v2.0
+     keystone_service: name=cinder type=volume description="OpenStack Block Storage" token=c74441d71bd640660939 public_url=http://{{ ansible_eth0['ipv4']['address'] }}:8776/v2/%(tenant_id)s
 
    - name: Create Cinderv2 service and Endpoint
-     keystone_service: name=glancev2 type=volume2 description="OpenStack Block Storage v2" token=c74441d71bd640660939 public_url=http://localhost:35357/v2.0
+     keystone_service: name=glancev2 type=volume2 description="OpenStack Block Storage v2" token=c74441d71bd640660939 public_url=http://{{ ansible_eth0['ipv4']['address'] }}:8776/v2/%(tenant_id)s
 
    - name: Copy cinder.conf
      template: src=/etc/ansible/roles/controller/templates/cind.j2 dest=/etc/cinder/cinder.conf owner=cinder group=cinder mode="u=rw,g=r,o=r"
@@ -18,7 +18,7 @@
      command: cinder-manage db sync
 
 
-
+#   http://{{ ansible_eth0['ipv4']['address'] }}:8776/v2/%(tenant_id)s
 #   - name: Nova DB Sync
 #     command: nova-manage db sync
 
