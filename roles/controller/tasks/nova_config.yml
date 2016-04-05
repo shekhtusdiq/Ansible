@@ -12,10 +12,10 @@
      command: nova-manage db sync
 
    - name: Copy Nova.conf
-     template: src=/etc/ansible/roles/controller/templates/no.j2 dest=/etc/nova/nova.conf owner=nova group=nova mode="u=rw,g=r,o=r"
+     template: src=/root/ansible/roles/controller/templates/no.j2 dest=/etc/nova/nova.conf owner=nova group=nova mode="u=rw,g=r,o=r"
    
    - name: Copy nova-compute.conf
-     template: src=/etc/ansible/roles/controller/templates/nc.j2 dest=/etc/nova/nova-compute.conf owner=nova group=nova mode="u=rw,g=r,o=r"
+     template: src=/root/ansible/roles/controller/templates/nc.j2 dest=/etc/nova/nova-compute.conf owner=nova group=nova mode="u=rw,g=r,o=r"
 
    
      notify:

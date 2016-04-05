@@ -12,7 +12,7 @@
      keystone_service: name=glancev2 type=volume2 description="OpenStack Block Storage v2" token=c74441d71bd640660939 public_url=http://{{ ansible_eth0['ipv4']['address'] }}:8776/v2/%(tenant_id)s
 
    - name: Copy cinder.conf
-     template: src=/etc/ansible/roles/controller/templates/cind.j2 dest=/etc/cinder/cinder.conf owner=cinder group=cinder mode="u=rw,g=r,o=r"
+     template: src=/root/ansible/roles/controller/templates/cind.j2 dest=/etc/cinder/cinder.conf owner=cinder group=cinder mode="u=rw,g=r,o=r"
 
    - name: Sync DB
      command: cinder-manage db sync

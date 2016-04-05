@@ -8,10 +8,8 @@
    - name: Create glance service and Endpoint
      keystone_service: name=glance type=image description="Glance Image Service" public_url=http://{{ ansible_eth0['ipv4']['address'] }}:9292/v2.0 token=c74441d71bd640660939
 
-
-# Glance api needs to be restarted
-# glance registre needs to be restarted
-# Sync the database
+#   - name: Glance DB Synch
+#     glance_manage: action=db_sync
 
 #   - name: Download a pre-bundled image for testing
 #     command: wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img

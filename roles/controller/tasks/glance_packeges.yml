@@ -6,7 +6,7 @@
     - glance
 
   - name: Copy glance.conf
-    template: src=/etc/ansible/roles/controller/templates/gl.j2 dest=/etc/glance/glance-api.conf owner=glance group=glance mode="u=rw,g=r,o=r"
+    template: src=/root/ansible/roles/controller/templates/gl.j2 dest=/etc/glance/glance-api.conf owner=glance group=glance mode="u=rw,g=r,o=r"
 
     notify:
     - Glance restart all
