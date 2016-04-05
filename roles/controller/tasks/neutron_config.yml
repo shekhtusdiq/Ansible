@@ -8,7 +8,6 @@
  - name: Create Neutron Service
    keystone_service: name=neutron type=network description="OpenStack Networking" public_url=http://{{ ansible_eth0['ipv4']['address'] }}:9696 token=c74441d71bd640660939
 
+   notify:
+   - Neutron restart all    
 
-
-
-#keystone service-create --name=neutron --type=network --description="OpenStack Networking"

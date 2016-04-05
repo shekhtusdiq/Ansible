@@ -1,6 +1,6 @@
 ---
    - name: Create the user glance
-     keystone_user: tenant=service user=glance password=glance_pass token=c74441d71bd640660939 state=present
+     keystone_user: tenant=service user=glance password=glance_dbpass token=c74441d71bd640660939 state=present
 
    - name: Add glance user to admin role
      keystone_user: user=glance tenant=service role=admin token=c74441d71bd640660939
@@ -8,25 +8,18 @@
    - name: Create glance service and Endpoint
      keystone_service: name=glance type=image description="Glance Image Service" public_url=http://{{ ansible_eth0['ipv4']['address'] }}:9292/v2.0 token=c74441d71bd640660939
 
-     notify:
-     - Glance restart
-
-     notify:
-     - Glance Registery restart
-
-     notify:
-     - Synch Glance
 
 # Glance api needs to be restarted
 # glance registre needs to be restarted
 # Sync the database
 
 #   - name: Download a pre-bundled image for testing
-#     command: glance image-create --name Cirros --is-public true --container-format bare --disk-format qcow2 --location https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img
-
-
+#     command: wget http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
+#     command: glance image-create --name='cirros image' --is-public=true --container-format=bare --disk-format=qcow2 < cirros-0.3.4-x86_64-disk.img
+#     ignore_errors:
 # Add condition here 
 
-   - name: Check if download success or not
-     command: glance image-list
+#   - name: Check if download success or not
+#     command: glance image-list
+#     ignore_errors:
      

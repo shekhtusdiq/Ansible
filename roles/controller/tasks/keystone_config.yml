@@ -1,6 +1,6 @@
 ---
  - name: Sync Keystone DB
-   keystone_manage: action=db_sync
+   command: keystone-manage db_sync
 
  - name: Create the admin tenant
    keystone_user: tenant=admin tenant_description="Admin Tenant" token=c74441d71bd640660939 state=present
